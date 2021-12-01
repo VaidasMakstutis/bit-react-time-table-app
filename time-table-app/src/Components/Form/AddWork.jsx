@@ -4,42 +4,68 @@ import { Button } from "react-bootstrap";
 import { FloatingLabel } from "react-bootstrap";
 import Services from "../Services";
 import Companies from '../Companies';
+import { useState } from "react";
 
-function AddWork() {
+function AddWork(props) {
+
+  const [items, setItems] = useState({
+      date: "",
+      company: "",
+      service: "",
+      description: "",
+      startTime: "",
+      endTime: "",
+  });
+
+  const handleChange = (e) => {
+    setItems({
+      ...items,
+      [e.target.name]:e.target.value,
+    })
+
+    // console.log(e.target.name);
+  }
+  // console.log(items);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.setWorks(items);
+  };
+
   return (
     <>
       <Card>
-        <Card.Header>Pridėkite darbą:</Card.Header>
+        <Card.Header>Pridėkite naują darbą</Card.Header>
         <Card.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Pasirinkite datą:</Form.Label>
-              <Form.Control type="date" />
+              <Form.Control type="date" name="date" onChange={handleChange} value={items.date} />
             </Form.Group>
             <Form.Group>
-              <Form.Select aria label="Default select example">
-              <option value="Pasirinkite įmonę"></option>
-              <Services />
-              </Form.Select>
-            </Form.Group>
-            <Form.Group>
-              <Form.Select aria label="Default select example">
-              <option value="Pasirinkite paslaugą"></option>
+            <Form.Label>Pasirinkite įmonę:</Form.Label>
+              <Form.Select aria label="Default select example" name="company" onChange={handleChange} value={items.company}>
               <Companies />
               </Form.Select>
             </Form.Group>
             <Form.Group>
-              <FloatingLabel controlId="floatingTextarea2" label="">
-                <Form.Control as="textarea" placeholder="Palikite komentarą" style={{ height: "100px" }} />
+            <Form.Label>Pasirinkite paslaugą:</Form.Label>
+              <Form.Select aria label="Default select example" name="service" onChange={handleChange} value={items.service}>
+              <Services />
+              </Form.Select>
+            </Form.Group>
+            <Form.Group>
+              <FloatingLabel controlId="floatingTextarea2" label="Atlikto darbo aprašymas">
+                <Form.Control as="textarea" style={{ height: "100px" }} name="description" onChange={handleChange} value={items.description} />
               </FloatingLabel>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Nuo:</Form.Label>
-              <Form.Control type="time"></Form.Control>
+              <Form.Control type="time" name="startTime" onChange={handleChange} value={items.startTime}></Form.Control>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Iki:</Form.Label>
-              <Form.Control type="time"></Form.Control>
+              <Form.Control type="time" name="endTime" onChange={handleChange} value={items.endTime}></Form.Control>
             </Form.Group>
             <Form.Group>
               <Button type="submit" variant="primary">
