@@ -45,12 +45,14 @@ function AddWork(props) {
             <Form.Group>
             <Form.Label>Pasirinkite įmonę:</Form.Label>
               <Form.Select aria label="Default select example" name="company" onChange={handleChange} value={items.company}>
+              <option>...</option>
               <Companies />
               </Form.Select>
             </Form.Group>
             <Form.Group>
             <Form.Label>Pasirinkite paslaugą:</Form.Label>
               <Form.Select aria label="Default select example" name="service" onChange={handleChange} value={items.service}>
+              <option>...</option>
               <Services />
               </Form.Select>
             </Form.Group>
