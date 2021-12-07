@@ -1,15 +1,19 @@
 import { Card } from "react-bootstrap";
-import { Table } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import AddWork from "./Form/AddWork";
-import React, { useState } from "react";
-import Work from "./Work";
+import React, { useEffect, useState } from "react";
 import Filter from "./Filter";
+import WorkTable from "./WorkTable";
+import * as services from "../services";
 
 function Works(props) {
   const [addWork, setAddWork] = useState(false);
   const [works, setWorks] = useState([]);
   const [filteredWorks, setFilteredWorks] = useState([]);
+  
+  useEffect(()=>{
+    services.getAllWorks(setWorks);
+  }, [])
 
   const addWorkHandler = () => {
     setAddWork(true);
@@ -20,6 +24,7 @@ function Works(props) {
   };
 
   const handleAddWork = data => {
+    services.addWork(data);
     setWorks([...works, data]);
     closeFormHandler();
     props.status(true);
@@ -57,47 +62,7 @@ function Works(props) {
           <h3>Darbų sąrašas:</h3>
         </Card.Header>
         <Card.Body>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Įmonė</th>
-                <th>Paslauga</th>
-                <th>Aprašymas</th>
-                <th>Trukmė</th>
-              </tr>
-            </thead>
-            <tbody>
-                {
-              (filteredWorks.length)?
-              (filteredWorks.map((work, i) => (
-                <Work
-                  key={work.i}
-                  date={work.date}
-                  company={work.company}
-                  service={work.service}
-                  description={work.description}
-                  startTime={work.startTime}
-                  endTime={work.endTime}
-                />
-              )))
-
-              :
-
-              (works.map((work =>
-                <Work
-                  key={work.i}
-                  date={work.date}
-                  company={work.company}
-                  service={work.service}
-                  description={work.description}
-                  startTime={work.startTime}
-                  endTime={work.endTime}
-                />
-              )))
-              }
-            </tbody>
-          </Table>
+          <WorkTable data={(works.length) ? works : filteredWorks} />
         </Card.Body>
       </Card>
     </>

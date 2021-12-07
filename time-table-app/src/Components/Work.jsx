@@ -1,8 +1,8 @@
 function Work(props) {
     
   const diff = (start, end) => {
-    // start = props.startTime;
-    // end = props.endTime;
+    start = props.startTime;
+    end = props.endTime;
     start = start.split(":");
     end = end.split(":");
     const startDate = new Date(0, 0, 0, start[0], start[1], 0);
@@ -15,6 +15,10 @@ function Work(props) {
     return (hours < 9 ? "0" : "") + hours + ":" + (minutes < 9 ? "0" : "") + minutes;
   };
 
+  const getIdHandler = () => {
+      props.delete(props.id);
+  }
+
   return (
     <tr>
       <td>{props.date}</td>
@@ -22,6 +26,8 @@ function Work(props) {
       <td>{props.service}</td>
       <td>{props.description}</td>
       <td>{diff(props.startTime, props.endTime)}</td>
+      <td><a href="#/">Keisti</a></td>
+      <td><a href="#/" onClick={getIdHandler}>Šalinti</a></td>
     </tr>
   );
 }
