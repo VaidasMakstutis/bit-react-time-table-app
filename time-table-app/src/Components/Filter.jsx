@@ -4,44 +4,48 @@ import { Button } from "react-bootstrap";
 import React from "react";
 import Companies from "./Companies";
 import Services from "./Services";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Filter(props) {
   const [filter, setFilter] = useState({});
 
-  const handleFilter = e => {
+  const handleChange = (e) => {
     setFilter({
       ...filter,
       [e.target.name]: e.target.value
     })
   }
 
-  const submitFilter = e => {
-    e.preventDefault();
-    props.setFilter(filter);
-  };
+  const resetFilterHandler = () => {
+    setFilter({});
+  }
+
+  useEffect(()=> {
+    props.handleFilter(filter);
+  }, [filter])
 
   return (
     <Card>
       <Card.Body>
-        <Form onSubmit={submitFilter}>
+        <Form>
           <Form.Group>
             <Form.Label>Pasirinkite įmonę:</Form.Label>
-            <Form.Select name="company" onChange={handleFilter}>
+            <Form.Select name="company" onChange={handleChange}>
             <option>...</option>
               <Companies />
             </Form.Select>
           </Form.Group>
           <Form.Group>
             <Form.Label>Pasirinkite paslaugą:</Form.Label>
-            <Form.Select name="service" onChange={handleFilter}>
+            <Form.Select name="service" onChange={handleChange}>
             <option>...</option>
               <Services />
             </Form.Select>
           </Form.Group>
-          <Form.Group>
-            <Button type="submit" variant="primary">Filtruoti</Button>
-          </Form.Group>
+            {
+            (Object.keys(filter).length !== 0) &&
+            <Button type="reset" variant="primary" onClick={resetFilterHandler}>Valyti</Button>
+            }
         </Form>
       </Card.Body>
     </Card>
