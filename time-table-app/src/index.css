@@ -12,6 +12,20 @@ code {
     monospace;
 }
 
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
 .sort {
   margin: 10px;
 }

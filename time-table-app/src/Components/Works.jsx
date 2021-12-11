@@ -80,7 +80,7 @@ function Works(props) {
             </Button>
           ) : (
             <Button className="btn btn-primary" onClick={addWorkHandler}>
-              Pridėti naują darbą
+              Pridėti
             </Button>
           )}
         </Card.Header>

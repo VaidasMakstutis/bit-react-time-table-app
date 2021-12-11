@@ -42,8 +42,8 @@ function AddWork(props) {
   }
 
   return (
-    <>
-      <Card>
+    <div className="form">
+      <Card className="w-50">
         <Card.Header>Pridėkite naują darbą</Card.Header>
         <Card.Body>
           <Form onSubmit={handleSubmit}>
@@ -88,7 +88,7 @@ function AddWork(props) {
           </Form>
         </Card.Body>
       </Card>
-    </>
+    </div>
   );
 }
 
