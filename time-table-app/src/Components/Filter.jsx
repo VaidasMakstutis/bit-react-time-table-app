@@ -26,6 +26,7 @@ function Filter(props) {
 
   return (
     <Card>
+      <Card.Header><h3>Duomenų filtravimas</h3></Card.Header>
       <Card.Body>
         <Form>
           <Form.Group>

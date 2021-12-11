@@ -12,14 +12,16 @@ function Works(props) {
   const [addWork, setAddWork] = useState(false);
   const [works, setWorks] = useState([]);
   const [filteredWorks, setFilteredWorks] = useState([]);
-  const [workId, setWorkId] = useState('');
-  const value = useMemo(()=>(
-    {
-      workId, 
+  const [workId, setWorkId] = useState("");
+  const [sortBy, setSortBy] = useState("COMPANY_ASC");
+
+  const value = useMemo(
+    () => ({
+      workId,
       setWorkId
-    }
-    
-  ), [workId])
+    }),
+    [workId]
+  );
 
   const addWorkHandler = () => {
     setAddWork(true);
@@ -38,8 +40,8 @@ function Works(props) {
 
   const onUpdateWorkHandler = (id, data) => {
     services.updateWork(id, data);
-    setWorkId('');
-  }
+    setWorkId("");
+  };
 
   const handleFilter = items => {
     const filteredItems = works.filter(item => {
@@ -48,12 +50,24 @@ function Works(props) {
       });
     });
     setFilteredWorks(filteredItems);
-    console.log(filteredItems);
+    // console.log(filteredItems);
   };
 
-  useEffect(()=>{
-    services.getAllWorks(setWorks);
-  }, [])
+  const sortByCompanyHandler = () => {
+    setSortBy(prevState => {
+      return prevState === "COMPANY_DESC" ? "COMPANY_ASC" : "COMPANY_DESC";
+    });
+  }
+
+  const sortByServiceHandler = () => {
+    setSortBy(prevState => {
+      return prevState === "SERVICE_DESC" ? "SERVICE_ASC" : "SERVICE_DESC";
+    });
+  }
+
+  useEffect(() => {
+    services.getAllWorks(setWorks, sortBy);
+  }, [sortBy]);
 
   return (
     <>
@@ -66,19 +80,27 @@ function Works(props) {
             </Button>
           ) : (
             <Button className="btn btn-primary" onClick={addWorkHandler}>
-              Pridėti
+              Pridėti naują darbą
             </Button>
           )}
         </Card.Header>
         <Card.Header>
-          <Filter handleFilter={handleFilter} />
+          <Card.Body>
+            <Filter handleFilter={handleFilter} />
+          </Card.Body>
+        </Card.Header>
+        <Card.Header>
+          <Card.Body>
+            <button variant="primary" className="btn btn-secondary sort" onClick={sortByCompanyHandler}>Rūšiuoti pagal įmonę ↓ ↑</button>
+            <button variant="primary" className="btn btn-secondary sort" onClick={sortByServiceHandler}>Rūšiuoti pagal paslaugą ↓ ↑</button>
+          </Card.Body>
         </Card.Header>
         <Card.Header>
           <h3>Darbų sąrašas:</h3>
         </Card.Header>
         <Card.Body>
           <WorkContext.Provider value={value}>
-          <WorkTable data={(filteredWorks.length) ? filteredWorks : works } />
+            <WorkTable sortByCompanyHandler={sortByCompanyHandler} sortByServiceHandler={sortByServiceHandler} data={filteredWorks.length ? filteredWorks : works} />
           </WorkContext.Provider>
         </Card.Body>
       </Card>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { WorkContext } from "./Works";
+import { Link } from "react-router-dom";
 
 function Work(props) {
 
@@ -34,10 +35,10 @@ function Work(props) {
       <td>{props.date}</td>
       <td>{props.company}</td>
       <td>{props.service}</td>
-      <td>{props.description}</td>
       <td>{diff(props.startTime, props.endTime)}</td>
       <td><button className="btn btn-primary" onClick={getIdUpdateHandler}>Redaguoti</button></td>
       <td><button className="btn btn-danger" onClick={getIdHandler}>Šalinti</button></td>
+      <td><Link className="btn btn-primary" key={props.id} to={`work/${props.id}`}>Plačiau</Link></td>
     </tr>
   );
 }
