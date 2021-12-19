@@ -5,7 +5,7 @@ import { FloatingLabel } from "react-bootstrap";
 import Services from "../Services";
 import Companies from '../Companies';
 import { useEffect, useState } from "react";
-import * as services from "../../services";
+import * as services from "../../services/worksServices";
 
 function AddWork(props) {
 

@@ -2,9 +2,12 @@ import "./App.css";
 import Works from "./Components/Works";
 import Header from "./Components/Header";
 import WorkById from "./Components/WorkById";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
 import { useState, useEffect } from "react";
 import { Alert } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CompaniesTable from "./Components/CompaniesTable";
 
 function App() {
   const [message, setMessage] = useState(false);
@@ -27,7 +30,10 @@ function App() {
         <Header />
         {message && <Alert variant="success">{message}</Alert>}
         <Routes>
-          <Route path="/" element={<Works status={handlerSetMessage} />} />
+          <Route path="/" element={<Login />}/>
+          <Route path="/register" element={<Register />}/>
+          <Route path="/works" element={<Works status={handlerSetMessage} />} />
+          <Route path="/companies" element={<CompaniesTable />} />
           <Route path="/work/:id" element={<WorkById />} />
         </Routes>
       </Router>

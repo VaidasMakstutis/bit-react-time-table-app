@@ -1,5 +1,6 @@
 import {Navbar} from "react-bootstrap";
 import {Container} from "react-bootstrap";
+import User from "./User";
 
 function Header() {
   return (
@@ -8,8 +9,8 @@ function Header() {
         <Container>
           <Navbar.Brand href="#home">TimeTable App</Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text><a href="https://github.com/VaidasMakstutis" target="_blank">Github</a> Vaidas</Navbar.Text>
           </Navbar.Collapse>
+          <User />
         </Container>
       </Navbar>
     </>
