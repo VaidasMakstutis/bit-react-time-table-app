@@ -112,20 +112,20 @@ function Works(props) {
       <Card>
         <Card.Header>
           {addWork ? (
-            <Button className="btn btn-primary" onClick={closeFormHandler}>
+            <Button className="btn btn-primary button" onClick={closeFormHandler}>
               Atšaukti
             </Button>
           ) : (
-            <Button className="btn btn-primary" onClick={addWorkHandler}>
+            <Button className="btn btn-primary button" onClick={addWorkHandler}>
               Pridėti naują darbą
             </Button>
           )}
           {addCompany ? (
-            <Button className="btn btn-primary" onClick={closeCompanyForm}>
+            <Button className="btn btn-danger button" onClick={closeCompanyForm}>
               Atšaukti
             </Button>
           ) : (
-            <Button className="btn btn-primary button" onclick={addCompanyHandler}>
+            <Button className="btn btn-primary button" onClick={addCompanyHandler}>
               Pridėti naują įmonę
             </Button>
           )}
@@ -134,7 +134,7 @@ function Works(props) {
               Uždaryti
             </Button>
           ) : (
-            <Button className="btn btn-primary" onClick={showCompaniesTable}>
+            <Button className="btn btn-secondary button" onClick={showCompaniesTable}>
               Įmonių sąrašas
             </Button>
           )}

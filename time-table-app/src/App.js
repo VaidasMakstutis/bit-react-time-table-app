@@ -2,6 +2,7 @@ import "./App.css";
 import Works from "./Components/Works";
 import Header from "./Components/Header";
 import WorkById from "./Components/WorkById";
+import CompanyById from "./Components/CompanyById";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import { useState, useEffect } from "react";
@@ -14,7 +15,7 @@ function App() {
 
   const handlerSetMessage = status => {
     if (status) {
-      setMessage("Service has been added succesfully!");
+      setMessage("Įrašas pridėtas!");
     }
   };
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/works" element={<Works status={handlerSetMessage} />} />
           <Route path="/companies" element={<CompaniesTable />} />
           <Route path="/work/:id" element={<WorkById />} />
+          <Route path="/company/:id" element={<CompanyById />} />
         </Routes>
       </Router>
     </div>
