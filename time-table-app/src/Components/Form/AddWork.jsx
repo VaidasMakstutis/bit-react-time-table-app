@@ -6,8 +6,14 @@ import Services from "../Services";
 import Companies from '../Companies';
 import { useEffect, useState } from "react";
 import * as services from "../../services/worksServices";
+import * as userServices from "../../services/authServices";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../services/authServices";
+
 
 function AddWork(props) {
+
+  const [user, loading, error] = useAuthState(auth);
 
   const [items, setItems] = useState({
       date: "",
@@ -32,6 +38,16 @@ function AddWork(props) {
   }
   // console.log(items);
 
+  useEffect(()=> {
+    setItems(prevState => {
+      return {
+        ...prevState,
+        uid: user.uid
+      };
+    });
+  }, [user]);
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     props.setWorks(items);
@@ -40,6 +56,8 @@ function AddWork(props) {
   const updateHandler = () => {
     props.onUpdateWorkHandler(items, props.update);
   }
+
+  // console.log(items);
 
   return (
     <div className="form">

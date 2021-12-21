@@ -5,6 +5,7 @@ import WorkById from "./Components/WorkById";
 import CompanyById from "./Components/CompanyById";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
+import Reset from "./Components/Reset";
 import { useState, useEffect } from "react";
 import { Alert } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -33,6 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />}/>
           <Route path="/register" element={<Register />}/>
+          <Route path="/reset" element={<Reset />}/>
           <Route path="/works" element={<Works status={handlerSetMessage} />} />
           <Route path="/companies" element={<CompaniesTable />} />
           <Route path="/work/:id" element={<WorkById />} />

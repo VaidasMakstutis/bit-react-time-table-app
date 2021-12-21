@@ -100,7 +100,7 @@ function Works(props) {
 
   useEffect(() => {
     if (!user) navigate("/");
-    worksServices.getAllWorks(setWorks, sortBy);
+    user && worksServices.getAllWorks(setWorks, sortBy, user);
     companyServices.getAllCompanies(companies => setCompanies(companies));
   }, [sortBy]);
 

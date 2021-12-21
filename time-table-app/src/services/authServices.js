@@ -32,6 +32,15 @@ const signIn = async (email, password) => {
     }
 }
 
+const resetPassword = async (email) => {
+    try {
+        await auth.sendPasswordResetEmail(email);
+        alert('Slaptazodzio atkurimo nuorodo issiusta el.pastu')
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 export default firebase;
 
 export {
@@ -39,5 +48,6 @@ export {
     db,
     register,
     logout,
-    signIn
+    signIn,
+    resetPassword
 };

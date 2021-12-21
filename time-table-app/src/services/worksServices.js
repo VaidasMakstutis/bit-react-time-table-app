@@ -7,10 +7,11 @@ const SORT_OPTIONS = {
     "SERVICE_DESC" : {column: 'service', direction: 'desc'},
 }
 
-export const getAllWorks = (onWorkChanged, sortBy) => {
+export const getAllWorks = (onWorkChanged, sortBy, user) => {
     firebase
         .firestore()
         .collection('time-table')
+        .where("uid", "==", user?.uid)
         .orderBy(SORT_OPTIONS[sortBy].column, SORT_OPTIONS[sortBy].direction)
         .onSnapshot((snapshot)=>{
             const newWork = snapshot.docs.map(doc => ({
