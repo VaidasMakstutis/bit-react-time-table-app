@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 import { Alert } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CompaniesTable from "./Components/CompaniesTable";
+import { AppProvider } from "./context/WorksContext";
+import AddWork from "./Components/Form/AddWork";
 
 function App() {
   const [message, setMessage] = useState(false);
@@ -29,17 +31,20 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Header />
-        {message && <Alert variant="success">{message}</Alert>}
-        <Routes>
-          <Route path="/" element={<Login />}/>
-          <Route path="/register" element={<Register />}/>
-          <Route path="/reset" element={<Reset />}/>
-          <Route path="/works" element={<Works status={handlerSetMessage} />} />
-          <Route path="/companies" element={<CompaniesTable />} />
-          <Route path="/work/:id" element={<WorkById />} />
-          <Route path="/company/:id" element={<CompanyById />} />
-        </Routes>
+       <AppProvider>
+          <Header />
+          {message && <Alert variant="success">{message}</Alert>}
+          <Routes>
+            <Route path="/" element={<Login />}/>
+            <Route path="/register" element={<Register />}/>
+            <Route path="/reset" element={<Reset />}/>
+            <Route path="/works" element={<Works status={handlerSetMessage} />} />
+            <Route path="/companies" element={<CompaniesTable />} />
+            <Route path="/work/:id" element={<WorkById />} />
+            <Route path="/company/:id" element={<CompanyById />} />
+            <Route path="/work/update/:id" element={<AddWork />} />
+          </Routes>
+        </AppProvider>
       </Router>
     </div>
   );

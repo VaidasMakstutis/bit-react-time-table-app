@@ -4,23 +4,27 @@ import AddWork from "./Form/AddWork";
 import AddCompany from "./Form/AddCompany";
 import CompaniesTable from "./CompaniesTable";
 import React, { useEffect, useState, useMemo } from "react";
-import Filter from "./Filter";
+// import Filter from "./Filter";
 import WorkTable from "./WorkTable";
 import * as worksServices from "../services/worksServices";
 import * as companyServices from "../services/companyServices";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../services/authServices";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../context/WorksContext";
 
-export const WorkContext = React.createContext({});
+// export const WorkContext = React.createContext({});
 
 function Works(props) {
+
+  const {worksItems, isOpen, handleForm} = useGlobalContext();
+
   const [addWork, setAddWork] = useState(false);
   const [addCompany, setAddCompany] = useState(false);
   const [works, setWorks] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [companiesTable, setCompaniesTable] = useState(false);
-  const [filteredWorks, setFilteredWorks] = useState([]);
+  // const [filteredWorks, setFilteredWorks] = useState([]);
   const [workId, setWorkId] = useState("");
   const [sortBy, setSortBy] = useState("COMPANY_ASC");
 
@@ -76,16 +80,6 @@ function Works(props) {
     setCompaniesTable(false);
   };
 
-  const handleFilter = items => {
-    const filteredItems = works.filter(item => {
-      return Object.keys(items).every(filter => {
-        return items[filter] === item[filter];
-      });
-    });
-    setFilteredWorks(filteredItems);
-    // console.log(filteredItems);
-  };
-
   const sortByCompanyHandler = () => {
     setSortBy(prevState => {
       return prevState === "COMPANY_DESC" ? "COMPANY_ASC" : "COMPANY_DESC";
@@ -100,23 +94,25 @@ function Works(props) {
 
   useEffect(() => {
     if (!user) navigate("/");
-    user && worksServices.getAllWorks(setWorks, sortBy, user);
+    user && worksServices.getAllWorks(setWorks, user);
     companyServices.getAllCompanies(companies => setCompanies(companies));
-  }, [sortBy]);
+  }, []);
+
+console.log('from context', worksItems);
 
   return (
     <>
       {addCompany && <AddCompany setCompanies={handleAddCompany}/>}
       {companiesTable && <CompaniesTable companies={companies}/>}
-      {(addWork || workId) && <AddWork setWorks={handleAddWork} update={workId} onUpdateWorkHandler={onUpdateWorkHandler} />}
+      {(isOpen) && <AddWork setWorks={handleAddWork} update={workId} onUpdateWorkHandler={onUpdateWorkHandler} />}
       <Card>
         <Card.Header>
-          {addWork ? (
-            <Button className="btn btn-primary button" onClick={closeFormHandler}>
+          {isOpen ? (
+            <Button className="btn btn-primary button" onClick={()=>{handleForm(false)}}>
               Atšaukti
             </Button>
           ) : (
-            <Button className="btn btn-primary button" onClick={addWorkHandler}>
+            <Button className="btn btn-primary button" onClick={()=>{handleForm(true)}}>
               Pridėti naują darbą
             </Button>
           )}
@@ -141,7 +137,7 @@ function Works(props) {
         </Card.Header>
         <Card.Header>
           <Card.Body>
-            <Filter handleFilter={handleFilter} />
+            {/* <Filter handleFilter={handleFilter} /> */}
           </Card.Body>
         </Card.Header>
         <Card.Header>
@@ -158,13 +154,11 @@ function Works(props) {
           <h3>Darbų sąrašas:</h3>
         </Card.Header>
         <Card.Body>
-          <WorkContext.Provider value={value}>
+          {/* <WorkContext.Provider value={value}> */}
             <WorkTable
-              sortByCompanyHandler={sortByCompanyHandler}
-              sortByServiceHandler={sortByServiceHandler}
-              data={filteredWorks.length ? filteredWorks : works}
+              data={worksItems}
             />
-          </WorkContext.Provider>
+          {/* </WorkContext.Provider> */}
         </Card.Body>
       </Card>
     </>

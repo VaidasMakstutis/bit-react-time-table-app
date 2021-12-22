@@ -1,11 +1,11 @@
 import React from "react";
 import { useContext } from "react";
-import { WorkContext } from "./Works";
+// import { WorkContext } from "./Works";
 import { Link } from "react-router-dom";
 
 function Work(props) {
 
-  const {workId, setWorkId} = useContext(WorkContext);
+  // const {workId, setWorkId} = useContext(WorkContext);
     
   const diff = (start, end) => {
     start = props.startTime;
@@ -26,9 +26,9 @@ function Work(props) {
       props.delete(props.id);
   }
 
-  const getIdUpdateHandler = () => {
-      setWorkId(props.id);
-  }
+  // const getIdUpdateHandler = () => {
+  //     setWorkId(props.id);
+  // }
 
   return (
     <tr>
@@ -36,7 +36,7 @@ function Work(props) {
       <td>{props.company}</td>
       <td>{props.service}</td>
       <td>{diff(props.startTime, props.endTime)}</td>
-      <td><button className="btn btn-primary" onClick={getIdUpdateHandler}>Redaguoti</button></td>
+      <td><Link className="btn btn-primary" to={`/work/update/${props.id}`}>Redaguoti</Link></td>
       <td><button className="btn btn-danger" onClick={getIdHandler}>Šalinti</button></td>
       <td><Link className="btn btn-primary" key={props.id} to={`work/${props.id}`}>Plačiau</Link></td>
     </tr>
