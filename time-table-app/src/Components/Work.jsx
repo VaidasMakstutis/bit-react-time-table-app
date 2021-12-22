@@ -38,7 +38,7 @@ function Work(props) {
       <td>{diff(props.startTime, props.endTime)}</td>
       <td><Link className="btn btn-primary" to={`/work/update/${props.id}`}>Redaguoti</Link></td>
       <td><button className="btn btn-danger" onClick={getIdHandler}>Šalinti</button></td>
-      <td><Link className="btn btn-primary" key={props.id} to={`work/${props.id}`}>Plačiau</Link></td>
+      <td><Link className="btn btn-primary" key={props.id} to={`/work/${props.id}`}>Plačiau</Link></td>
     </tr>
   );
 }
