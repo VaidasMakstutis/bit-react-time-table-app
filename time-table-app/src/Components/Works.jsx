@@ -154,7 +154,7 @@ function Works(props) {
           {(Object.keys(worksFiltered).length) ?
             <WorkTable data={worksFiltered} />
             :
-            <WorkTable data={worksItems} />
+          <WorkTable data={worksItems} />
           }
         </Card.Body>
       </Card>
