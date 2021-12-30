@@ -4,25 +4,29 @@ import { Button } from "react-bootstrap";
 import React from "react";
 import Companies from "./Companies";
 import Services from "./Services";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useGlobalContext } from "../context/WorksContext";
 
 function Filter(props) {
-  const [filter, setFilter] = useState({});
+
+const {handleFilter, filter, worksFiltered} = useGlobalContext();
 
   const handleChange = e => {
-    setFilter({
-      ...filter,
+      handleFilter({
+          ...filter,
       [e.target.name]: e.target.value
-    });
-  };
+      })
+  }
+
+  useEffect(()=>{
+    if(!worksFiltered.length) {
+      handleFilter({});
+    }
+  }, [worksFiltered]);
 
   const resetFilterHandler = () => {
-    setFilter({});
+    handleFilter({});
   };
-
-  useEffect(() => {
-    props.handleFilter(filter);
-  }, [filter]);
 
   return (
     <div className="filter">

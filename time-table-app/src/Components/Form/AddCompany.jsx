@@ -21,7 +21,6 @@ const handleChange = (e) => {
 const handleSubmit = (e) => {
   e.preventDefault();
   props.setCompanies(companyInfo);
-  console.log(companyInfo);
 };
 
   return (

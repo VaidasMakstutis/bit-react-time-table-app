@@ -1,11 +1,11 @@
 import React from "react";
 import { useContext } from "react";
-// import { WorkContext } from "./Works";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../context/WorksContext";
 
 function Work(props) {
 
-  // const {workId, setWorkId} = useContext(WorkContext);
+  const {deleteFromFirestore} = useGlobalContext();
     
   const diff = (start, end) => {
     start = props.startTime;
@@ -22,14 +22,6 @@ function Work(props) {
     return (hours < 9 ? "0" : "") + hours + ":" + (minutes < 9 ? "0" : "") + minutes;
   };
 
-  const getIdHandler = () => {
-      props.delete(props.id);
-  }
-
-  // const getIdUpdateHandler = () => {
-  //     setWorkId(props.id);
-  // }
-
   return (
     <tr>
       <td>{props.date}</td>
@@ -37,7 +29,7 @@ function Work(props) {
       <td>{props.service}</td>
       <td>{diff(props.startTime, props.endTime)}</td>
       <td><Link className="btn btn-primary" to={`/work/update/${props.id}`}>Redaguoti</Link></td>
-      <td><button className="btn btn-danger" onClick={getIdHandler}>Šalinti</button></td>
+      <td><button className="btn btn-danger" onClick={()=>{deleteFromFirestore(props.id)}}>Šalinti</button></td>
       <td><Link className="btn btn-primary" key={props.id} to={`/work/${props.id}`}>Plačiau</Link></td>
     </tr>
   );

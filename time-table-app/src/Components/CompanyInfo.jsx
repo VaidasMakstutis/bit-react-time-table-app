@@ -13,7 +13,7 @@ function CompanyInfo(props) {
             <td>{props.director}</td>
             <td>{props.address}</td>
             <td><button className="btn btn-danger button" onClick={getCompanyIdHandler}>Šalinti</button></td>
-            <td><Link className="btn btn-primary" key={props.companyId} to={`company/${props.companyId}`}>Plačiau</Link></td>
+            <td><Link className="btn btn-primary" key={props.companyId} to={`/company/${props.companyId}`}>Plačiau</Link></td>
         </tr>
     )
 }

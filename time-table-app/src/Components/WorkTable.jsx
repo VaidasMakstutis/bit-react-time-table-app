@@ -1,8 +1,12 @@
 import { Table } from "react-bootstrap";
 import Work from "./Work";
 import * as services from "../services/worksServices";
+import { useGlobalContext } from "../context/WorksContext";
 
 function WorkTable(props) {
+
+  const { worksNew, worksFiltered } = useGlobalContext();
+  
   const deleteItemHandler = id => {
     services.deleteWork(id);
   };
@@ -21,7 +25,7 @@ function WorkTable(props) {
           </tr>
         </thead>
         <tbody>
-          {props.data.length
+        {props.data.length
             ? props.data.map((work, i) => (
                 <Work
                   key={i}

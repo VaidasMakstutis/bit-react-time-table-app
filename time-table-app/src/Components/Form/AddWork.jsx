@@ -2,6 +2,7 @@ import { Card } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { FloatingLabel } from "react-bootstrap";
+import  { Alert } from "react-bootstrap";
 import Services from "../Services";
 import Companies from '../Companies';
 import { useEffect, useState } from "react";
@@ -11,27 +12,19 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../services/authServices";
 import { useGlobalContext } from "../../context/WorksContext";
 import Error from "../Error";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 
-function AddWork(props) {
+function AddWork() {
 
   const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
   const {id} = useParams();
-  const {work, errors, handleAddWorkData, workValidation, addWorkToFirestore} = useGlobalContext();
-
-  const [items, setItems] = useState({
-      date: "",
-      company: "",
-      service: "",
-      description: "",
-      startTime: "",
-      endTime: "",
-  });
+  const {work, errors, handleAddWorkData, workValidation, addWorkToFirestore, updateFirestore} = useGlobalContext();
 
   useEffect(()=> {
     try {
-      services.showById(data => handleAddWorkData(data), id);
+      id && services.showById(data => handleAddWorkData(data), id);
     }catch(error){
       console.log(error);
     }
@@ -42,12 +35,9 @@ function AddWork(props) {
   }
 
   useEffect(()=> {
-    setItems(prevState => {
-      return {
-        ...prevState,
-        uid: user.uid
-      };
-    });
+   if(user) {
+     handleAddWorkData({uid:user.uid})
+   }
   }, [user]);
 
 
@@ -61,7 +51,8 @@ function AddWork(props) {
   };
 
   const updateHandler = () => {
-    props.onUpdateWorkHandler(items, props.update);
+    updateFirestore(id, work);
+    navigate('/works');
   }
 
   useEffect(()=>{
@@ -69,10 +60,6 @@ function AddWork(props) {
       handleAddWorkData({uid:user.uid})
     }
   },[user])
-
-  console.log('from work', work);
-  console.log('validation errors', errors);
-  console.log('Update id', id);
 
   return (
     <div className="form">
@@ -86,6 +73,7 @@ function AddWork(props) {
         </Card.Header>
         <Card.Header>Pridėkite naują darbą</Card.Header>
         <Card.Body>
+        {errors && Object.keys(errors).map(key => <Alert variant="danger">{errors[key]}</Alert>)}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Pasirinkite datą:</Form.Label>

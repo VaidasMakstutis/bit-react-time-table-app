@@ -13,8 +13,6 @@ function WorkById() {
         services.showById(item=>setWork(item), id)
     },[id])
 
-    console.log(work);
-
     return (
         <Card>
             <Card.Header>{work.date}</Card.Header>
